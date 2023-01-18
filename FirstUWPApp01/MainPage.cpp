@@ -7,21 +7,67 @@ using namespace Windows::UI::Xaml;
 
 namespace winrt::FirstUWPApp01::implementation
 {
-    FirstUWPApp01::CustomerViewModel MainPage::Model()
-    {
-        return m_model;
-    }
-    void MainPage::ClickHandler(IInspectable const&, RoutedEventArgs const&)
-    {
-        // myButton().Content(box_value(L"Clicked"));
+	MainPage::MainPage()
+	{
+		m_model = make<FirstUWPApp01::implementation::CustomerViewModel>();
+		
+		// OutputDebugString(FromBatteryStatus(report.Status()).c_str());
+	
 
-        greetingOutput().Text(L"Hello, " + nameInput().Text() + L"!");
-    }
+		// Xaml objects should not call InitializeComponent during construction.
+		// See https://github.com/microsoft/cppwinrt/tree/master/nuget#initializecomponent
+	}
+
+	void MainPage::InitializeComponent()
+	{
+		MainPageT::InitializeComponent();
+		auto report = Battery().GetReport();
+		
+		batteryStatus().Text(FromBatteryStatus(report.Status()));
+		batteryLevel().Value(report.RemainingCapacityInMilliwattHours().GetDouble());
+	}
+	hstring MainPage::FromBatteryStatus(Windows::System::Power::BatteryStatus status)
+	{
+		switch (status)
+		{
+		case Windows::System::Power::BatteryStatus::NotPresent:
+			return hstring{ L"Not Present" };
+		case Windows::System::Power::BatteryStatus::Discharging:
+			return hstring{ L"Dischargin" };
+		case Windows::System::Power::BatteryStatus::Idle:
+			return hstring{ L"Idle" };
+		case Windows::System::Power::BatteryStatus::Charging:
+			return hstring{ L"Charging" };
+		default:
+			return hstring{ L"Battery Status not supported" };
+		}
+	}
+
+	FirstUWPApp01::CustomerViewModel MainPage::Model()
+	{
+		return m_model;
+	}
+
+	Windows::Devices::Power::Battery MainPage::Battery()
+	{
+		return Windows::Devices::Power::Battery::AggregateBattery();
+	}
+
+	void MainPage::ClickHandler(IInspectable const&, RoutedEventArgs const&)
+	{
+		greetingOutput().Text(L"Hello, " + nameInput().Text() + L"!");
+	}
+
+
+	void MainPage::inputButtonVM_Click(
+		winrt::Windows::Foundation::IInspectable const& sender, 
+		winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+	{
+		auto const foo = nameInput().Text();
+		Model().Customer().Name(foo);
+
+	}
+
 }
 
 
-void winrt::FirstUWPApp01::implementation::MainPage::inputButtonVM_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-{
-    Model().Customer().Name(L"Optimus Prime");
-
-}

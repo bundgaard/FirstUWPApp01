@@ -20,13 +20,16 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="contentPanel.Margin" Value="20,30,0,0"/>
+                        <Setter Target="contentPanel.Margin" Value="20,30,40,0"/>
                         <Setter Target="inputPanel.Orientation" Value="Vertical"/>
                         <Setter Target="inputButton.Margin" Value="0,4,0,0"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        <TextBlock HorizontalAlignment="Left" Text="Battery Status" FontSize="36"/>
+        <TextBlock x:Name="batteryStatus" Text="" FontSize="14" Style="{ThemeResource BaseTextBlockStyle}"/>
+        <ProgressBar x:Name="batteryLevel" MinWidth="100" Value="50" MaxHeight="96"/>
         <TextBlock HorizontalAlignment="Left" Text="Hello, World!" FontSize="36"/>
         <TextBlock Text="What's your name?" Style="{ThemeResource BaseTextBlockStyle}"/>
         <StackPanel x:Name="inputPanel" Orientation="Horizontal" Margin="0,20,0,20">
@@ -34,13 +37,12 @@
             <Button x:Name="inputButton" Content="Say &quot;Hello&quot;" Click="ClickHandler"/>
         </StackPanel>
         <TextBlock x:Name="greetingOutput" Style="{ThemeResource BaseTextBlockStyle}"/>
-        
+
         <StackPanel x:Name="inputPanelVM" Orientation="Horizontal" Margin="0,20,0,20">
-            
-            <TextBox x:Name="nameInputVM" Text="{x:Bind Model.Customer.Name,Mode=OneWay}" Width="300" HorizontalAlignment="Left"/>
-            <Button x:Name="inputButtonVM" Content="Say &quot;Hello&quot;" Click="ClickHandler"/>
+
+            <TextBox x:Name="nameInputVM" Text="{x:Bind Model.Customer.Name, Mode=OneWay}" Width="300" HorizontalAlignment="Left"/>
             <Button x:Name="inputButtonVMChange" Content="Change title" Click="inputButtonVM_Click"/>
         </StackPanel>
-        
+
     </StackPanel>
 </Page>
