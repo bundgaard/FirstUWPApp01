@@ -1,0 +1,10 @@
+namespace FirstUWPApp01
+{
+    [bindable]
+    [default_interface]
+    runtimeclass Customer : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        Customer(String name);
+        String Name;
+    }
+}

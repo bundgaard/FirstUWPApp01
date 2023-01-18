@@ -1,0 +1,11 @@
+import "Customer.idl";
+
+namespace FirstUWPApp01
+{
+ 
+    runtimeclass CustomerViewModel 
+    {
+        CustomerViewModel();
+        Customer Customer{ get; };
+    }
+}
