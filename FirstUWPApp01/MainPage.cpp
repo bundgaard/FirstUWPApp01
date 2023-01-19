@@ -22,10 +22,20 @@ namespace winrt::FirstUWPApp01::implementation
 	{
 		MainPageT::InitializeComponent();
 		auto report = Battery().GetReport();
-		
+		Battery().ReportUpdated({this, &MainPage::OnBatteryReport});
+
 		batteryStatus().Text(FromBatteryStatus(report.Status()));
 		batteryLevel().Value(report.RemainingCapacityInMilliwattHours().GetDouble());
 	}
+
+	void MainPage::OnBatteryReport(Windows::Devices::Power::Battery const& battery, winrt::Windows::Foundation::IInspectable const& args)
+	{
+		OutputDebugString(L"Onbattery report\n");
+		const auto status = FromBatteryStatus(battery.GetReport().Status());
+		batteryStatus().Text(status);
+		
+	}
+
 	hstring MainPage::FromBatteryStatus(Windows::System::Power::BatteryStatus status)
 	{
 		switch (status)

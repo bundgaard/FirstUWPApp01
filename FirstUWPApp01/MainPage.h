@@ -14,6 +14,10 @@ namespace winrt::FirstUWPApp01::implementation
 		Windows::Devices::Power::Battery Battery();
 		void ClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
 		void InitializeComponent();
+
+		void OnBatteryReport(Windows::Devices::Power::Battery const& battery, winrt::Windows::Foundation::IInspectable const& args);
+	
+	
 	private:
 		FirstUWPApp01::CustomerViewModel m_model{ nullptr };
 		Windows::Devices::Power::Battery m_battery{ nullptr };
